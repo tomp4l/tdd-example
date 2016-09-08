@@ -14,8 +14,9 @@ class MoneySpec extends ObjectBehavior
         $this->shouldHaveType('Money\Money');
     }
 
-    function let()
+    function let(Bank $bank)
     {
+        $bank->getRate('USD', 'USD')->willReturn(1);
         $this->beConstructedWith(5, 'USD');
     }
     
@@ -56,14 +57,13 @@ class MoneySpec extends ObjectBehavior
 
     function it_can_add_the_same_currency(Bank $bank)
     {
-        $bank->getRate('USD', 'USD')->willReturn(1);
-        $this->add($bank, new Money(5, 'USD'))->shouldBeLike(new Money(10, 'USD'));
+        $this->add(new Money(5, 'USD'))->convert($bank, 'USD')->shouldBeLike(new Money(10, 'USD'));
     }
 
     function it_can_add_different_currency(Bank $bank)
     {
         $bank->getRate('EUR', 'USD')->willReturn(0.5);
-        $this->add($bank, new Money(5, 'EUR'))->shouldBeLike(new Money(15, 'USD'));
+        $this->add(new Money(5, 'EUR'))->convert($bank, 'USD')->shouldBeLike(new Money(15, 'USD'));
     }
 
     function it_can_convert_to_another_currency(Bank $bank)

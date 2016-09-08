@@ -1,7 +1,7 @@
 <?php
 namespace Money;
 
-class Money
+class Money implements MoneyInterface
 {
     protected $currency;
 
@@ -14,10 +14,6 @@ class Money
         $this->currency = $currency;
     }
 
-    /**
-     * @param $by
-     * @return static
-     */
     public function multiply($by)
     {
         return new Money($this->amount * $by, $this->currency);
@@ -45,10 +41,13 @@ class Money
         return new Money($this->amount / $rate, $currency);
     }
 
-    public function add(Bank $bank, Money $money)
+    /**
+     * @param MoneyInterface $augend
+     * @param MoneyInterface $addend
+     * @return MoneyInterface
+     */
+    public function add(MoneyInterface $money)
     {
-        $converted = $money->convert($bank, $this->currency);
-
-        return new Money($this->amount + $converted->getAmount(), $this->currency);
+        return new Sum($money, $this);
     }
 }

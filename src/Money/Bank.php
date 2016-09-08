@@ -20,5 +20,8 @@ class Bank
         return $this->rates[$from][$to];
     }
 
-
+    public function convert(MoneyInterface $money, $currency)
+    {
+        return $money->convert($this, $currency);
+    }
 }
