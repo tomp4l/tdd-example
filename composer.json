@@ -1,0 +1,21 @@
+{
+  "name": "pay4later/money",
+  "description": "Money demo",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "Tom Mottram",
+      "email": "tom@pay4later.com"
+    }
+  ],
+  "require": {
+    "phpspec/phpspec": "2.5.0",
+    "ciaranmcnulty/phpspec-typehintedmethods": "1.1.3"
+  },
+  "autoload": {
+    "psr-0": {
+      "": "src"
+    }
+  }
+}
